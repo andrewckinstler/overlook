@@ -103,10 +103,12 @@ function instGuestDom() {
   <header>
   <h1>The Hotel of Discomfort</h1>
   </header>
-  <main id='guest-dashboard'>
+  <main class='dashboard'>
   <section class='sidebar'>
-    <article id='guest-total-spent'></article>
-    <article id='guest-bookings'></article>
+    <h2>Total spent with us:</h2>
+    <span id='guest-total-spent'></span>
+    <h2>Past bookings:</h2>
+    <span id='guest-bookings'></span>
   </section>
   <section class='content'>
     <input id='date-input_guest' type="date">
@@ -131,7 +133,7 @@ function displayBookings() {
   bookings.forEach((elem) => {
     $('#guest-bookings').append(
       `<div>
-      <span class='booking'> Room: ${elem.roomNumber}, Date: ${elem.date}</span>
+      <span class='booking'>Date: ${elem.date}, Room: ${elem.roomNumber}</span>
       </div>
       `
     )

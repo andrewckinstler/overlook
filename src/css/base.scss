@@ -5,6 +5,7 @@ $header-font: 'Tangerine',
 cursive;
 $button: #4eabda;
 $button-pressed: #2990c4;
+$gray: #cecece;
 
 $test: red;
 
@@ -85,6 +86,28 @@ button {
 button:active {
   background-color: $button-pressed;
   color: #FFF;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-areas: 'sidebar content content';
+
+  .sidebar {
+    text-align: center;
+    padding: 20px;
+    grid-area: sidebar;
+    border-right: 1px solid $gray;
+
+    h2 {
+      margin: 10px 0;
+    }
+  }
+  
+  .content {
+    grid-area: content;
+    padding: 30px 0;
+  }
+
 }
 
 select {
