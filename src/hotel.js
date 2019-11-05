@@ -32,12 +32,14 @@ class Hotel {
       })
       return acc;
     }, 0)
-    return total.toFixed(2);
+    return parseFloat(total.toFixed(2));
   }
 
   calcOccupiedPercentage(key, value) {
     return (this.getBookings(key, value).length / this.rooms.length) * 100
   }
+
+
 
 }
 
