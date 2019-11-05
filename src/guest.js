@@ -8,8 +8,8 @@ class Guest extends Hotel {
     this.bookings = this.getBookings('userID', this.id);
   }
   
-  filterByType(type) {
-    return this.rooms.filter(room => room.roomType === type)    
+  filterByType(roomList, type) {
+    return roomList.filter(room => room.roomType === type)    
   }
 }
 

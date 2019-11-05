@@ -216,7 +216,7 @@ describe('Guest', () => {
   })
 
   it('should be able to filter by room type', () => {
-    expect(guest.filterByType("single room")).to.deep.equal([{
+    expect(guest.filterByType(rooms, "single room")).to.deep.equal([{
         number: 3,
         roomType: 'single room',
         bidet: false,

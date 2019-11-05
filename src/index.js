@@ -109,14 +109,35 @@ function fixDate() {
 }
 
 $('#date-submit_guest').on('click', () => {
-   let rooms = hotel.availableRooms('date', fixDate());
-   rooms.forEach(room => {
-     $('#available-rooms_guest').append(
+  let rooms = hotel.availableRooms('date', fixDate());
+  rooms.forEach(room => {
+    $('#available-rooms_guest').append(
       `<div>
         <span class='avail-room'> Room: ${room.number}</span>
         </div>
       `
-     )
-   })
-    
+    )
+  })
+
+  function filterRooms() {
+    $('#available-rooms_guest').html('')
+    let roomsToFilter = hotel.availableRooms('date', fixDate())
+    let type = $('.room-types').val()
+    let filtered = guest.filterByType(roomsToFilter, type);
+    if (filtered.length === 0) {
+      $('#available-rooms_guest').text('We\'re sorry, but there are no rooms that match your search')
+    } else {
+      filtered.forEach(room => {
+        $('#available-rooms_guest').append(
+          `<div>
+        <span class='avail-room'> Room: ${room.number}</span>
+        </div>`
+        )
+      })
+    }
+  }
+
+  $('#filter-rooms').on('click', () => filterRooms())
+
+
 })

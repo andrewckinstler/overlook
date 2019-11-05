@@ -86,3 +86,7 @@ button:active {
   background-color: $button-pressed;
   color: #FFF;
 }
+
+select {
+ @include form;
+}

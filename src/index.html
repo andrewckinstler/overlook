@@ -17,7 +17,7 @@
     <input type='text' placeholder='Username' id='username'>
     <input type='password' placeholder='Password' id='password'>
     <button type='submit' id='submit'>Submit</button>
-    
+
   </main>
   <main id='manager-dashboard'>
     <section id='content'>
@@ -39,8 +39,15 @@
     <section class='content'>
       <input id='date-input_guest' type="date">
       <button id='date-submit_guest' type='submit'>Select date</button>
-      <article id='available-rooms_guest'>
-      </article>
+      <select class='room-types'>
+        <option value="select room type">Please select an option</option>
+        <option value="residential suite">Residential Suite</option>
+        <option value="junior suite">Junior Suite</option>
+        <option value="suite">Suite</option>
+        <option value="single room">Single Room</option>
+      </select>
+      <button id='filter-rooms' type='submit'>Filter rooms</button>
+      <article id='available-rooms_guest'></article>
     </section>
   </main>
 </body>
