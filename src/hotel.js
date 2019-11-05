@@ -32,7 +32,7 @@ class Hotel {
       })
       return acc;
     }, 0)
-    return total;
+    return total.toFixed(2);
   }
 
   calcOccupiedPercentage(key, value) {
