@@ -57,6 +57,18 @@ function getCurrentDate() {
   return today;
 }
 
+$('body').click(() => {
+  if (event.target.id === 'date-submit_guest') {
+    showAvailableRooms();
+  }
+  if (event.target.id === 'filter-rooms') {
+    filterRooms();
+  }
+
+
+
+})
+
 
 $('#submit').on('click', () => {
   if ($('#username').val() === 'manager' && $('#password').val() === 'overlook2019') {
@@ -87,6 +99,29 @@ function instMgrDom() {
 }
 
 function instGuestDom() {
+  $('body').html(`
+  <header>
+  <h1>The Hotel of Discomfort</h1>
+  </header>
+  <main id='guest-dashboard'>
+  <section class='sidebar'>
+    <article id='guest-total-spent'></article>
+    <article id='guest-bookings'></article>
+  </section>
+  <section class='content'>
+    <input id='date-input_guest' type="date">
+    <button id='date-submit_guest' type='submit'>Select date</button>
+    <select class='room-types'>
+      <option value="select room type">Please select an option</option>
+      <option value="residential suite">Residential Suite</option>
+      <option value="junior suite">Junior Suite</option>
+      <option value="suite">Suite</option>
+      <option value="single room">Single Room</option>
+    </select>
+    <button id='filter-rooms' type='submit'>Filter rooms</button>
+    <article id='available-rooms_guest'></article>
+  </section>
+</main>`)
   $('#guest-total-spent').text(guest.calcTotalRev('userID', guest.id));
   displayBookings();
 }
@@ -108,9 +143,10 @@ function fixDate() {
   return date.replace(/-/g, '/')
 }
 
-$('#date-submit_guest').on('click', () => {
-  let rooms = hotel.availableRooms('date', fixDate());
-  rooms.forEach(room => {
+function showAvailableRooms() {
+  $('#available-rooms_guest').html('')
+  let availableRooms = hotel.availableRooms('date', fixDate());
+  availableRooms.forEach(room => {
     $('#available-rooms_guest').append(
       `<div>
         <span class='avail-room'> Room: ${room.number}</span>
@@ -118,26 +154,22 @@ $('#date-submit_guest').on('click', () => {
       `
     )
   })
+}
 
-  function filterRooms() {
-    $('#available-rooms_guest').html('')
-    let roomsToFilter = hotel.availableRooms('date', fixDate())
-    let type = $('.room-types').val()
-    let filtered = guest.filterByType(roomsToFilter, type);
-    if (filtered.length === 0) {
-      $('#available-rooms_guest').text('We\'re sorry, but there are no rooms that match your search')
-    } else {
-      filtered.forEach(room => {
-        $('#available-rooms_guest').append(
-          `<div>
+function filterRooms() {
+  $('#available-rooms_guest').html('')
+  let roomsToFilter = hotel.availableRooms('date', fixDate())
+  let type = $('.room-types').val()
+  let filtered = guest.filterByType(roomsToFilter, type);
+  if (filtered.length === 0) {
+    $('#available-rooms_guest').text('We\'re sorry, but there are no rooms that match your search')
+  } else {
+    filtered.forEach(room => {
+      $('#available-rooms_guest').append(
+        `<div>
         <span class='avail-room'> Room: ${room.number}</span>
         </div>`
-        )
-      })
-    }
+      )
+    })
   }
-
-  $('#filter-rooms').on('click', () => filterRooms())
-
-
-})
+}
