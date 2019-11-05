@@ -60,14 +60,14 @@ h1 {
   align-items: center;
   justify-content: space-between;
   text-align: center;
+
   p {
     margin: 5px;
   }
+}
 
-  #login,
-  input {
-    @include form;
-  }
+input {
+  @include form;
 }
 
 .show {
@@ -86,4 +86,3 @@ button:active {
   background-color: $button-pressed;
   color: #FFF;
 }
-

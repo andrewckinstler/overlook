@@ -10,7 +10,6 @@ import './css/base.scss';
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png';
 
-import User from '../src/user.js';
 import Manager from '../src/manager.js';
 import Guest from '../src/guest.js';
 import Hotel from '../src/hotel.js';
@@ -43,19 +42,20 @@ Promise.all([users, rooms, bookings])
     hotel = new Hotel(users, bookings, rooms);
   })
 
-  function getCurrentDate() {
-    let today = new Date();
-    let dd = today.getDate();
-    let mm = today.getMonth() + 1;
-    let yyyy = today.getFullYear();
-    if (dd < 10) {
-      dd = '0' + dd;
-    } if (mm < 10) {
-      mm = '0' + mm;
-    }
-    today = `${yyyy}/${mm}/${dd}`;
-    return today;
+function getCurrentDate() {
+  let today = new Date();
+  let dd = today.getDate();
+  let mm = today.getMonth() + 1;
+  let yyyy = today.getFullYear();
+  if (dd < 10) {
+    dd = '0' + dd;
   }
+  if (mm < 10) {
+    mm = '0' + mm;
+  }
+  today = `${yyyy}/${mm}/${dd}`;
+  return today;
+}
 
 
 $('#submit').on('click', () => {
@@ -63,10 +63,12 @@ $('#submit').on('click', () => {
     $('#login').removeClass('show');
     $('#login').addClass('hidden');
     manager = new Manager();
+    instMgrDom();
   } else if ($('#username').val().includes('customer') && $('#password').val() === 'overlook2019') {
     guest = new Guest(getGuest(), users, bookings, rooms);
     $('#login').removeClass('show');
     $('#login').addClass('hidden');
+    instGuestDom();
   }
 })
 
@@ -76,6 +78,28 @@ function getGuest() {
   return newGuest;
 }
 
+function instMgrDom() {
+  $('#available-rooms_mgr').text(hotel.availableRooms('date', getCurrentDate()).length)
+  $('#total-revenue_mgr').text(hotel.calcTotalRev('date', getCurrentDate()))
+  $('#percent-occupied_mgr').text(hotel.calcOccupiedPercentage('date', getCurrentDate()))
+}
 
+function instGuestDom() {
+  $('#guest-total-spent').text(guest.calcTotalRev('userID', guest.id));
+  displayBookings();
+}
 
+function displayBookings() {
+  let bookings = guest.bookings;
+  bookings.forEach((elem) => {
+    $('#guest-bookings').append(
+      `<div>
+      <span class='booking'> Room: ${elem.roomNumber}, Date: ${elem.date}</span>
+      </div>
+      `
+    )
+  })
 
+  
+  
+}

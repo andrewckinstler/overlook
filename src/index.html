@@ -1,20 +1,40 @@
 <!DOCTYPE html>
 <html lang="en-US">
-  <head>
-      <link href="https://fonts.googleapis.com/css?family=Raleway|Tangerine&display=swap" rel="stylesheet">
-    <title>The Hotel of Discomfort</title>
-  </head>
-  <body>
-    <header><h1>The Hotel of Discomfort</h1></header>
-    <main id='login' class='show'>
-      <h2>Welcome to The Hotel of Discomfort</h2>
-      <p>Please sign in.</p>
-      <input type='text' placeholder='Username' id='username'>
-      <input type='password' placeholder='Password' id='password'>
-      <button type='submit' id='submit'>Submit</button>
-    </main>
-    <main id='manager-dashboard'>
 
-    </main>
-  </body>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Raleway|Tangerine&display=swap" rel="stylesheet">
+  <title>The Hotel of Discomfort</title>
+</head>
+
+<body>
+  <header>
+    <h1>The Hotel of Discomfort</h1>
+  </header>
+  <main id='login' class='show'>
+    <h2>Welcome to The Hotel of Discomfort</h2>
+    <p>Please sign in.</p>
+    <input type='text' placeholder='Username' id='username'>
+    <input type='password' placeholder='Password' id='password'>
+    <button type='submit' id='submit'>Submit</button>
+  </main>
+  <main id='manager-dashboard'>
+    <section id='content'>
+
+    </section>
+    <article id='sidebar'>
+      <section id='available-rooms_mgr'></section>
+      <section id='total-revenue_mgr'></section>
+      <section id='percent-occupied_mgr'></section>
+      <input id='date-input_mgr' type="date">
+      <button id='date-submit_mgr' type='submit'></button>
+
+    </article>
+  </main>
+
+  <main id='guest-dashboard'>
+    <section id='guest-total-spent'></section>
+    <section id='guest-bookings'></section>
+  </main>
+</body>
+
 </html>
