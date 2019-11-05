@@ -13,27 +13,35 @@
   <main id='login' class='show'>
     <h2>Welcome to The Hotel of Discomfort</h2>
     <p>Please sign in.</p>
+    <span id='error'></span>
     <input type='text' placeholder='Username' id='username'>
     <input type='password' placeholder='Password' id='password'>
     <button type='submit' id='submit'>Submit</button>
+    
   </main>
   <main id='manager-dashboard'>
     <section id='content'>
-
-    </section>
-    <article id='sidebar'>
-      <section id='available-rooms_mgr'></section>
-      <section id='total-revenue_mgr'></section>
-      <section id='percent-occupied_mgr'></section>
       <input id='date-input_mgr' type="date">
-      <button id='date-submit_mgr' type='submit'></button>
-
-    </article>
+      <button id='date-submit_mgr' type='submit'>Select date</button>
+    </section>
+    <section class='sidebar'>
+      <article id='available-rooms_mgr'></article>
+      <article id='total-revenue_mgr'></article>
+      <article id='percent-occupied_mgr'></article>
+      </article>
   </main>
 
   <main id='guest-dashboard'>
-    <section id='guest-total-spent'></section>
-    <section id='guest-bookings'></section>
+    <section class='sidebar'>
+      <article id='guest-total-spent'></article>
+      <article id='guest-bookings'></article>
+    </section>
+    <section class='content'>
+      <input id='date-input_guest' type="date">
+      <button id='date-submit_guest' type='submit'>Select date</button>
+      <article id='available-rooms_guest'>
+      </article>
+    </section>
   </main>
 </body>
 

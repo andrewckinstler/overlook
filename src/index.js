@@ -69,6 +69,8 @@ $('#submit').on('click', () => {
     $('#login').removeClass('show');
     $('#login').addClass('hidden');
     instGuestDom();
+  } else {
+    $('#error').text('Incorrect username or password');
   }
 })
 
@@ -99,7 +101,22 @@ function displayBookings() {
       `
     )
   })
-
-  
-  
 }
+
+function fixDate() {
+  let date = $('#date-input_guest').val();
+  return date.replace(/-/g, '/')
+}
+
+$('#date-submit_guest').on('click', () => {
+   let rooms = hotel.availableRooms('date', fixDate());
+   rooms.forEach(room => {
+     $('#available-rooms_guest').append(
+      `<div>
+        <span class='avail-room'> Room: ${room.number}</span>
+        </div>
+      `
+     )
+   })
+    
+})
