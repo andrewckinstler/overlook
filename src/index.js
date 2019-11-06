@@ -79,7 +79,7 @@ $('body').click(() => {
 
 
 $('#submit').on('click', () => {
-  if ($('#username').val() === 'manager' && $('#password').val() === '123') {
+  if ($('#username').val() === 'manager' && $('#password').val() === 'overlook2019') {
     $('#login').removeClass('show');
     $('#login').addClass('hidden');
     manager = new Manager(users, bookings, rooms);
