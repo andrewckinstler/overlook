@@ -64,6 +64,9 @@ $('body').click(() => {
   if (event.target.id === 'filter-rooms') {
     filterRooms();
   }
+  if (event.target.id === 'search-submit_mgr') {
+    getGuestData($('#guest-search_mgr').val());
+  }
 })
 
 
@@ -71,7 +74,7 @@ $('#submit').on('click', () => {
   if ($('#username').val() === 'manager' && $('#password').val() === 'overlook2019') {
     $('#login').removeClass('show');
     $('#login').addClass('hidden');
-    manager = new Manager();
+    manager = new Manager(users, bookings, rooms);
     instMgrDom();
   } else if ($('#username').val().includes('customer') && $('#password').val() === 'overlook2019') {
     guest = new Guest(getGuest(), users, bookings, rooms);
@@ -89,6 +92,18 @@ function getGuest() {
   return newGuest;
 }
 
+function getGuestData(name) {
+  const guest = manager.getGuestByName(name);
+  const bookings = hotel.getBookings('userID', guest.id);
+  bookings.forEach(elem => {
+    $('#user-info').append(
+    `<div>
+    <span class='booking'>Date: ${elem.date}, Room: ${elem.roomNumber}</span>
+    </div>
+    `)
+  });
+}
+
 function instMgrDom() {
   $('body').html(`
   <header>
@@ -104,8 +119,9 @@ function instMgrDom() {
     %<span id='percent-occupied_mgr'></span>
   </section>
   <section id='content'>
-    <input id='date-input_mgr' type="date">
-    <button id='date-submit_mgr' type='submit'>Select date</button>
+    <input id='guest-search_mgr' type="text">
+    <button id='search-submit_mgr' type='submit'>Search users</button>
+    <article id='user-info'></article>
   </section>
 </main>`)
   $('#available-rooms_mgr').text(hotel.availableRooms('date', getCurrentDate()).length)
