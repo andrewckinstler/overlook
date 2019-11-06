@@ -27,15 +27,12 @@ $delete: red;
   border: none;
 }
 
+// Global style fix
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Raleway', sans-serif;
-}
-
-body {
-  background-color: $primary-background;
 }
 
 // Header styling
@@ -55,6 +52,10 @@ h1 {
 }
 
 // Content and body styles
+body {
+  background-color: $primary-background;
+}
+
 #login {
   padding-top: 30px;
   flex-direction: column;
