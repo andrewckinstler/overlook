@@ -7,7 +7,10 @@ class Guest extends Hotel {
     this.name = guest.name;
     this.bookings = this.getBookings('userID', this.id);
   }
-
+  
+  filterByType(roomList, type) {
+    return roomList.filter(room => room.roomType === type)    
+  }
 }
 
 export default Guest;

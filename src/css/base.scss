@@ -5,6 +5,7 @@ $header-font: 'Tangerine',
 cursive;
 $button: #4eabda;
 $button-pressed: #2990c4;
+$gray: #cecece;
 
 $test: red;
 
@@ -85,4 +86,37 @@ button {
 button:active {
   background-color: $button-pressed;
   color: #FFF;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: .75fr 2.25fr;
+  grid-template-areas: 'sidebar content content';
+
+  .sidebar {
+    text-align: center;
+    padding: 20px;
+    grid-area: sidebar;
+
+
+    h2 {
+      margin: 10px 0;
+    }
+  }
+  
+  .content {
+    grid-area: content;
+    padding: 30px;
+  }
+
+}
+
+select {
+ @include form;
+}
+.booking {
+  display: block;
+  padding: 13px 0;
+  border-bottom: 1px solid #ccc;
+  font-size: 15px;
 }

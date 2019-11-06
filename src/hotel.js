@@ -32,12 +32,31 @@ class Hotel {
       })
       return acc;
     }, 0)
-    return total.toFixed(2);
+    return parseFloat(total.toFixed(2));
   }
 
   calcOccupiedPercentage(key, value) {
-    return (this.getBookings(key, value).length / this.rooms.length) * 100
+    return ((this.getBookings(key, value).length / this.rooms.length) * 100).toFixed(2)
   }
+
+  bookNow(roomNumber, id, date, callback) {
+    let item = {
+      "userID": id,
+      "date": date,
+      "roomNumber": parseInt(roomNumber)
+    }
+    fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
+      method: 'POST',
+      body: JSON.stringify(item),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(data => callback(data))
+  }
+
+
 
 }
 
