@@ -179,7 +179,9 @@ function showAvailableRooms() {
   $('#available-rooms_guest .book-room').each(function () {
     const button = $(this);
     button.on('click', function () {
-      bookNow(button.attr('data-roomnumber'));
+      hotel.bookNow(button.attr('data-roomnumber'), guest.id, fixDate(), (data) => {
+        $(`[data-roomnumber=${data.roomNumber}]`).text('Booked!')
+      });
     })
   })
 }
@@ -200,24 +202,4 @@ function filterRooms() {
       )
     })
   }
-}
-
-function bookNow(roomNumber) {
-  let item = {
-    "userID": guest.id,
-    "date": fixDate(),
-    "roomNumber": parseInt(roomNumber)
-  }
-  fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
-    method: 'POST',
-    body: JSON.stringify(item),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-  .then(response => response.json())
-  .then(data => {
-    $(`[data-roomnumber=${data.roomNumber}]`).text('Booked!');
-  })
-
 }
