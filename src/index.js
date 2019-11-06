@@ -58,7 +58,6 @@ function getCurrentDate() {
 $('body').click((event) => {
   if (event.target.id === 'date-submit_guest') {
     showAvailableRooms();
-    
   }
   if (event.target.id === 'filter-rooms') {
     filterRooms();
@@ -75,7 +74,7 @@ $('body').click((event) => {
   }
   if (event.target.id === 'add-booking_mgr') {
     appendAddBooking();
-  } 
+  }
   if ($(event.target).hasClass('delete-booking')) {
     $(event.target).closest('div').remove();
   }
@@ -116,23 +115,18 @@ function getGuestData(name) {
     <button class='delete-booking' data-booking-id='${elem.id}'>Delete</button>
     </div>
     `);
-    $(`.delete-booking[data-booking-id='${elem.id}']`).on('click', function() {
+    $(`.delete-booking[data-booking-id='${elem.id}']`).on('click', function () {
       let f = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
-        method: 'DELETE',
-        body: JSON.stringify({
-          id: parseInt(elem.id)
-        }
-        ),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })      
-      .then(response => response.json())
-      .then((data) => {
-        console.log(data);
-        
-      })
-      .catch(error => console.log(error))
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: parseInt(elem.id)
+          })
+        })
+        .then(response => response.json())
+        .catch(error => console.log(error))
     });
   });
 }
@@ -173,7 +167,7 @@ function instGuestDom() {
   <section class='sidebar'>
     <h2>Total spent with us:</h2>
     <span id='guest-total-spent'></span>
-    <h2>Past bookings:</h2>
+    <h2>Your bookings:</h2>
     <span id='guest-bookings'></span>
   </section>
   <section class='content'>
@@ -229,6 +223,10 @@ function showAvailableRooms() {
     button.on('click', function () {
       hotel.bookNow(button.attr('data-roomnumber'), guest.id, fixDate(), (data) => {
         $(`[data-roomnumber=${data.roomNumber}]`).text('Booked!')
+        $('#guest-bookings').append(
+          `<div>
+          <span class='booking'>Date: ${fixDate()}, Room: ${data.roomNumber}</span>
+          </div>`)
       });
     })
   })
@@ -281,8 +279,8 @@ function appendOptions() {
       `)
   })
   pickRoomSelect.attr('disabled', false);
-  pickRoomSelect.on('change', function() {
-    if(pickRoomSelect.val()){
+  pickRoomSelect.on('change', function () {
+    if (pickRoomSelect.val()) {
       bookButton.attr('disabled', false);
       bookButton.on('click', () => {
         let guestData = manager.getGuestByName($('#guest-search_mgr').val())
