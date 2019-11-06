@@ -36,7 +36,7 @@ class Hotel {
   }
 
   calcOccupiedPercentage(key, value) {
-    return (this.getBookings(key, value).length / this.rooms.length) * 100
+    return ((this.getBookings(key, value).length / this.rooms.length) * 100).toFixed(2)
   }
 
   bookNow(roomNumber, id, date, callback) {

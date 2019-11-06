@@ -97,7 +97,8 @@ button:active {
     text-align: center;
     padding: 20px;
     grid-area: sidebar;
-    border-right: 1px solid $gray;
+
+
     h2 {
       margin: 10px 0;
     }
@@ -105,11 +106,17 @@ button:active {
   
   .content {
     grid-area: content;
-    padding: 30px 0;
+    padding: 30px;
   }
 
 }
 
 select {
  @include form;
+}
+.booking {
+  display: block;
+  padding: 13px 0;
+  border-bottom: 1px solid #ccc;
+  font-size: 15px;
 }

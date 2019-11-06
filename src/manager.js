@@ -4,11 +4,11 @@ class Manager extends Hotel {
   constructor(users, bookings, rooms) {
     super(users, bookings, rooms) 
   }
-  getGuestByName(searchedName) {
-    console.log(this.users);
-    
+  getGuestByName(searchedName) {    
     return this.users.find(user => user.name === searchedName)
   }
+  
+  
 }
 
 export default Manager;
