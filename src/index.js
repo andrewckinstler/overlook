@@ -64,9 +64,6 @@ $('body').click(() => {
   if (event.target.id === 'filter-rooms') {
     filterRooms();
   }
-
-
-
 })
 
 
@@ -93,6 +90,24 @@ function getGuest() {
 }
 
 function instMgrDom() {
+  $('body').html(`
+  <header>
+  <h1>The Hotel of Discomfort</h1>
+  </header>
+  <main class='dashboard'>
+  <section class='sidebar'>
+  <h2>Rooms available:</h2>
+    <span id='available-rooms_mgr'></span>
+  <h2>Revenue today:</h2>
+    <span id='total-revenue_mgr'></span>
+  <h2>Percent of rooms occupied</h2>  
+    %<span id='percent-occupied_mgr'></span>
+  </section>
+  <section id='content'>
+    <input id='date-input_mgr' type="date">
+    <button id='date-submit_mgr' type='submit'>Select date</button>
+  </section>
+</main>`)
   $('#available-rooms_mgr').text(hotel.availableRooms('date', getCurrentDate()).length)
   $('#total-revenue_mgr').text(hotel.calcTotalRev('date', getCurrentDate()))
   $('#percent-occupied_mgr').text(hotel.calcOccupiedPercentage('date', getCurrentDate()))
@@ -140,6 +155,10 @@ function displayBookings() {
   })
 }
 
+function bookRoom(e) {
+  console.log('hi', e)
+}
+
 function fixDate() {
   let date = $('#date-input_guest').val();
   return date.replace(/-/g, '/')
@@ -152,9 +171,16 @@ function showAvailableRooms() {
     $('#available-rooms_guest').append(
       `<div>
         <span class='avail-room'> Room: ${room.number}</span>
+        <button class='book-room' data-roomnumber='${room.number}'>One-click book!</button>
         </div>
       `
     )
+  })
+  $('#available-rooms_guest .book-room').each(function () {
+    const button = $(this);
+    button.on('click', function () {
+      bookNow(button.attr('data-roomnumber'));
+    })
   })
 }
 
@@ -174,4 +200,24 @@ function filterRooms() {
       )
     })
   }
+}
+
+function bookNow(roomNumber) {
+  let item = {
+    "userID": guest.id,
+    "date": fixDate(),
+    "roomNumber": parseInt(roomNumber)
+  }
+  fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
+    method: 'POST',
+    body: JSON.stringify(item),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    $(`[data-roomnumber=${data.roomNumber}]`).text('Booked!');
+  })
+
 }

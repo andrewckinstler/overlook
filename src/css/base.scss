@@ -90,6 +90,7 @@ button:active {
 
 .dashboard {
   display: grid;
+  grid-template-columns: .75fr 2.25fr;
   grid-template-areas: 'sidebar content content';
 
   .sidebar {
@@ -97,7 +98,6 @@ button:active {
     padding: 20px;
     grid-area: sidebar;
     border-right: 1px solid $gray;
-
     h2 {
       margin: 10px 0;
     }
