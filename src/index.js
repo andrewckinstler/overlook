@@ -55,9 +55,10 @@ function getCurrentDate() {
   return today;
 }
 
-$('body').click(() => {
+$('body').click((event) => {
   if (event.target.id === 'date-submit_guest') {
     showAvailableRooms();
+    
   }
   if (event.target.id === 'filter-rooms') {
     filterRooms();
@@ -75,11 +76,14 @@ $('body').click(() => {
   if (event.target.id === 'add-booking_mgr') {
     appendAddBooking();
   } 
+  if ($(event.target).hasClass('delete-booking')) {
+    $(event.target).closest('div').remove();
+  }
 })
 
 
 $('#submit').on('click', () => {
-  if ($('#username').val() === 'manager' && $('#password').val() === 'overlook2019') {
+  if ($('#username').val() === 'manager' && $('#password').val() === '1') {
     $('#login').removeClass('show');
     $('#login').addClass('hidden');
     manager = new Manager(users, bookings, rooms);
@@ -116,7 +120,7 @@ function getGuestData(name) {
       let f = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
         method: 'DELETE',
         body: JSON.stringify({
-          id: elem.id
+          id: parseInt(elem.id)
         }
         ),
         headers: {

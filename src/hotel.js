@@ -55,9 +55,6 @@ class Hotel {
     .then(response => response.json())
     .then(data => callback(data))
   }
-
-
-
 }
 
 export default Hotel;
