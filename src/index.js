@@ -55,7 +55,7 @@ function getCurrentDate() {
   return today;
 }
 
-$('body').click(() => {
+$('body').click((event) => {
   if (event.target.id === 'date-submit_guest') {
     showAvailableRooms();
   }
@@ -74,12 +74,15 @@ $('body').click(() => {
   }
   if (event.target.id === 'add-booking_mgr') {
     appendAddBooking();
-  } 
+  }
+  if ($(event.target).hasClass('delete-booking')) {
+    $(event.target).closest('div').remove();
+  }
 })
 
 
 $('#submit').on('click', () => {
-  if ($('#username').val() === 'manager' && $('#password').val() === '123') {
+  if ($('#username').val() === 'manager' && $('#password').val() === '1') {
     $('#login').removeClass('show');
     $('#login').addClass('hidden');
     manager = new Manager(users, bookings, rooms);
@@ -112,23 +115,18 @@ function getGuestData(name) {
     <button class='delete-booking' data-booking-id='${elem.id}'>Delete</button>
     </div>
     `);
-    $(`.delete-booking[data-booking-id='${elem.id}']`).on('click', function() {
+    $(`.delete-booking[data-booking-id='${elem.id}']`).on('click', function () {
       let f = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
-        method: 'DELETE',
-        body: JSON.stringify({
-          id: elem.id
-        }
-        ),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })      
-      .then(response => response.json())
-      .then((data) => {
-        console.log(data);
-        
-      })
-      .catch(error => console.log(error))
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: parseInt(elem.id)
+          })
+        })
+        .then(response => response.json())
+        .catch(error => console.log(error))
     });
   });
 }
@@ -145,9 +143,9 @@ function instMgrDom() {
   <h2>Rooms available:</h2>
     <span id='available-rooms_mgr'></span>
   <h2>Revenue today:</h2>
-    <span id='total-revenue_mgr'></span>
-  <h2>Percent of rooms occupied</h2>  
-    %<span id='percent-occupied_mgr'></span>
+    $<span id='total-revenue_mgr'></span>
+  <h2>Rooms occupied</h2>  
+    <span id='percent-occupied_mgr'></span>%
   </section>
   <section id='content'>
     <input id='guest-search_mgr' type="text">
@@ -169,7 +167,7 @@ function instGuestDom() {
   <section class='sidebar'>
     <h2>Total spent with us:</h2>
     <span id='guest-total-spent'></span>
-    <h2>Past bookings:</h2>
+    <h2>Your bookings:</h2>
     <span id='guest-bookings'></span>
   </section>
   <section class='content'>
@@ -225,6 +223,10 @@ function showAvailableRooms() {
     button.on('click', function () {
       hotel.bookNow(button.attr('data-roomnumber'), guest.id, fixDate(), (data) => {
         $(`[data-roomnumber=${data.roomNumber}]`).text('Booked!')
+        $('#guest-bookings').append(
+          `<div>
+          <span class='booking'>Date: ${fixDate()}, Room: ${data.roomNumber}</span>
+          </div>`)
       });
     })
   })
@@ -242,8 +244,22 @@ function filterRooms() {
       $('#available-rooms_guest').append(
         `<div>
         <span class='avail-room'> Room: ${room.number}</span>
-        </div>`
+        <button class='book-room' data-roomnumber='${room.number}'>One-click book!</button>
+        </div>
+      `
       )
+    })
+    $('#available-rooms_guest .book-room').each(function () {
+      const button = $(this);
+      button.on('click', function () {
+        hotel.bookNow(button.attr('data-roomnumber'), guest.id, fixDate(), (data) => {
+          $(`[data-roomnumber=${data.roomNumber}]`).text('Booked!')
+          $('#guest-bookings').append(
+            `<div>
+            <span class='booking'>Date: ${fixDate()}, Room: ${data.roomNumber}</span>
+            </div>`)
+        });
+      })
     })
   }
 }
@@ -277,8 +293,8 @@ function appendOptions() {
       `)
   })
   pickRoomSelect.attr('disabled', false);
-  pickRoomSelect.on('change', function() {
-    if(pickRoomSelect.val()){
+  pickRoomSelect.on('change', function () {
+    if (pickRoomSelect.val()) {
       bookButton.attr('disabled', false);
       bookButton.on('click', () => {
         let guestData = manager.getGuestByName($('#guest-search_mgr').val())

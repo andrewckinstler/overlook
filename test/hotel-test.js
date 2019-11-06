@@ -180,10 +180,24 @@ describe('Hotel', () => {
     hotel = new Hotel(users, bookings, rooms);
   })
 
-  it('should be an instance of hotel', () => {
-    expect(hotel).to.be.an.instanceOf(Hotel);
-  })
+  describe('Hotel instance props', () => {
+    it('should be an instance of hotel', () => {
+      expect(hotel).to.be.an.instanceOf(Hotel);
+    })
 
+    it('should hold a list of users', () => {
+      expect(hotel.users).to.equal(users)
+    })
+
+    it('should hold a list of bookings', () => {
+      expect(hotel.bookings).to.equal(bookings)
+    })
+
+    it('should hold a list of bookings', () => {
+      expect(hotel.rooms).to.equal(rooms)
+    })
+
+  })
   it('should return booked rooms for a day', () => {
     expect(hotel.getBookings('date', '2019/11/22')).to.deep.equal(
       [{
@@ -257,7 +271,7 @@ describe('Hotel', () => {
       "bedSize": "queen",
       "numBeds": 2,
       "costPerNight": 231.46
-    },  {
+    }, {
       "number": 10,
       "roomType": "suite",
       "bidet": false,
@@ -270,9 +284,4 @@ describe('Hotel', () => {
   it('should calculate the percent of rooms occupied by day', () => {
     expect(hotel.calcOccupiedPercentage('date', '2019/11/22')).to.equal(30)
   })
-
-
-
-
-
 })

@@ -1,4 +1,4 @@
-/* This is an example of using Sass, otherwise plain CSS works too*/
+/* Variables*/
 $primary-background: #f7f7f7;
 $gold: #ffe677;
 $header-font: 'Tangerine',
@@ -6,9 +6,9 @@ cursive;
 $button: #4eabda;
 $button-pressed: #2990c4;
 $gray: #cecece;
+$delete: red;
 
-$test: red;
-
+// Mixins
 @mixin form {
   width: 25%;
   height: 30px;
@@ -27,6 +27,7 @@ $test: red;
   border: none;
 }
 
+// Global style fix
 * {
   margin: 0;
   padding: 0;
@@ -34,10 +35,7 @@ $test: red;
   font-family: 'Raleway', sans-serif;
 }
 
-body {
-  background-color: $primary-background;
-}
-
+// Header styling
 header {
   background-image: url('https://images.pexels.com/photos/573552/pexels-photo-573552.jpeg?cs=srgb&dl=architecture-carpet-chandeliers-573552.jpg&fm=jpg');
   background-position: top;
@@ -53,7 +51,10 @@ h1 {
   text-shadow: $primary-background .5px .5px;
 }
 
-
+// Content and body styles
+body {
+  background-color: $primary-background;
+}
 
 #login {
   padding-top: 30px;
@@ -67,25 +68,12 @@ h1 {
   }
 }
 
-input {
-  @include form;
-}
-
 .show {
   display: flex;
 }
 
 .hidden {
   display: none;
-}
-
-button {
-  @include button;
-}
-
-button:active {
-  background-color: $button-pressed;
-  color: #FFF;
 }
 
 .dashboard {
@@ -103,7 +91,7 @@ button:active {
       margin: 10px 0;
     }
   }
-  
+
   .content {
     grid-area: content;
     padding: 30px;
@@ -111,12 +99,38 @@ button:active {
 
 }
 
-select {
- @include form;
-}
 .booking {
   display: block;
   padding: 13px 0;
   border-bottom: 1px solid #ccc;
   font-size: 15px;
+}
+
+// Buttons
+button {
+  @include button;
+
+
+  &:active {
+    background-color: $button-pressed;
+    color: #FFF;
+  }
+}
+
+.delete-booking {
+  background-color: $delete;
+
+  &:active {
+    background-color: #8b0000;
+    color: #FFF;
+  }
+}
+
+// Inputs/forms
+input {
+  @include form;
+}
+
+select {
+  @include form;
 }

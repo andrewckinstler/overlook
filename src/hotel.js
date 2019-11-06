@@ -36,7 +36,7 @@ class Hotel {
   }
 
   calcOccupiedPercentage(key, value) {
-    return ((this.getBookings(key, value).length / this.rooms.length) * 100).toFixed(2)
+    return parseInt(((this.getBookings(key, value).length / this.rooms.length) * 100).toFixed(2))
   }
 
   bookNow(roomNumber, id, date, callback) {
@@ -55,9 +55,6 @@ class Hotel {
     .then(response => response.json())
     .then(data => callback(data))
   }
-
-
-
 }
 
 export default Hotel;
