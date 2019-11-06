@@ -143,9 +143,9 @@ function instMgrDom() {
   <h2>Rooms available:</h2>
     <span id='available-rooms_mgr'></span>
   <h2>Revenue today:</h2>
-    <span id='total-revenue_mgr'></span>
-  <h2>Percent of rooms occupied</h2>  
-    %<span id='percent-occupied_mgr'></span>
+    $<span id='total-revenue_mgr'></span>
+  <h2>Rooms occupied</h2>  
+    <span id='percent-occupied_mgr'></span>%
   </section>
   <section id='content'>
     <input id='guest-search_mgr' type="text">
@@ -244,8 +244,22 @@ function filterRooms() {
       $('#available-rooms_guest').append(
         `<div>
         <span class='avail-room'> Room: ${room.number}</span>
-        </div>`
+        <button class='book-room' data-roomnumber='${room.number}'>One-click book!</button>
+        </div>
+      `
       )
+    })
+    $('#available-rooms_guest .book-room').each(function () {
+      const button = $(this);
+      button.on('click', function () {
+        hotel.bookNow(button.attr('data-roomnumber'), guest.id, fixDate(), (data) => {
+          $(`[data-roomnumber=${data.roomNumber}]`).text('Booked!')
+          $('#guest-bookings').append(
+            `<div>
+            <span class='booking'>Date: ${fixDate()}, Room: ${data.roomNumber}</span>
+            </div>`)
+        });
+      })
     })
   }
 }

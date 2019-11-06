@@ -183,6 +183,9 @@ describe('Manager', () => {
   })
 
   it('should find a user buy their name', () => {
-    expect(manager.getGuestByName("Leatha Ullrich")).to.deep.equal({ id: 1, name: 'Leatha Ullrich' });
+    expect(manager.getGuestByName("Leatha Ullrich")).to.deep.equal({
+      id: 1,
+      name: 'Leatha Ullrich'
+    });
   })
 })

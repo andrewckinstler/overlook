@@ -179,8 +179,18 @@ describe('Guest', () => {
     guest = new Guest(users[1], users, bookings, rooms);
   })
 
-  it('should be an instance of guest', () => {
-    expect(guest).to.be.an.instanceOf(Guest);
+  describe('Guest instance properties', () => {
+    it('should be an instance of guest', () => {
+      expect(guest).to.be.an.instanceOf(Guest);
+    })
+
+    it('should have an id', () => {
+      expect(guest.id).to.equal(2)
+    })
+
+    it('should have a name', () => {
+      expect(guest.name).to.equal("Rocio Schuster")
+    })
   })
 
   it('should have a list of their bookings', () => {
